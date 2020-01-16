@@ -40,6 +40,8 @@
         <link href="{{asset('fpro/plugins/sweetalerts/sweetalert2.min.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{asset('fpro/plugins/sweetalerts/sweetalert.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{asset('fpro/css/ui-kit/custom-sweetalert.css')}}" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" type="text/css" href="{{asset('fpro/css/components/animation/css/animate.min.css')}}">
+        <link href="{{ asset('fpro/css/components/custom-countdown.css') }}" rel="stylesheet" type="text/css">
         <style>
             .btnExcel{
                 background-image: linear-gradient(to right, #3862f5 0%, #00d1c1 100%);
@@ -170,6 +172,9 @@
                 -webkit-text-fill-color: transparent;
             }
             
+            .clock-val{
+                color: #e9ecef; 
+            }
         </style>
     </head>
     <body class="default-sidebar">
@@ -224,40 +229,29 @@
 
             <div id="content" class="main-content">
                 <br>
+                <span class="clock-val" id="days"></span>
+                <span class="clock-val" id="hours"></span>
+                <span class="clock-val" id="minutes"></span>
+                <span class="clock-val" id="seconds"></span>
                 <div class="container">
                     <div class="row" id="cancel-row">
-                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 layout-spacing">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 layout-spacing sinpromo">
                             <div class="statbox widget box box-shadow">
                                 <div class="widget-header-banner">
                                     <div class="widget-content widget-content-area-banner">
-                                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                                            <!--<ol class="carousel-indicators">
-                                                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active m"></li>
-                                                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                                                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                                            </ol>-->
+                                        <div id="carouselExampleIndicators1" class="carousel slide" data-ride="carousel">
                                             <div class="carousel-inner">
                                                 <div class="carousel-item active">
                                                     <a href="javascript:void(0)">
-                                                        <img class="d-block w-100" src="{{ asset('fpro/img/bannerDepurados.png')}}" width="100%" alt="First slide">
-                                                    </a>
-                                                </div>
-                                                <div class="carousel-item">
-                                                    <a href="javascript:void(0)">
-                                                        <img class="d-block w-100" src="{{ asset('fpro/img/bannerDepurados2.png')}}" width="100%" alt="Second slide">
-                                                    </a>
-                                                </div>
-                                                <div class="carousel-item">
-                                                    <a href="javascript:void(0)">
-                                                        <img class="d-block w-100" src="{{ asset('fpro/img/bannerDepurados3.png')}}" width="100%" alt="Third slide">
+                                                        <img class="d-block w-100" src="{{ asset('fpro/img/depurados/bannerDepurados.png')}}" width="100%" alt="First slide">
                                                     </a>
                                                 </div>
                                             </div>
-                                            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                            <a class="carousel-control-prev" href="#carouselExampleIndicators1" role="button" data-slide="prev">
                                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                                 <span class="sr-only">Previous</span>
                                             </a>
-                                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                            <a class="carousel-control-next" href="#carouselExampleIndicators1" role="button" data-slide="next">
                                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                                 <span class="sr-only">Next</span>
                                             </a>
@@ -270,48 +264,37 @@
                             <div class="statbox widget box box-shadow">
                                 <div class="widget-content widget-content-area">
                                     <div class="row">
-                                        <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6">
-                                            <img class="ml-4 mb-3" src="{{ asset('fpro/img/depurados.png')}}" width="30%">
+                                        <div class="col-lg-4 ">
+                                            <img class="ml-4 mb-3" src="{{ asset('fpro/img/depurados/depurados.png')}}" width="50%">
                                         </div>
-                                        <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6">
-                                            
+                                        <div class="col-lg-4 ">
+                                            <div class="form-group">
+                                                <p>Tipo de genealogía: </p>
+                                                <select id="typegen" class="custom-select form-control-rounded mb-4" onchange="getGenealogy(this.value)">
+                                                    <option value="1" selected="">Grupo Personal</option>
+                                                    <option value="2">Genealogía Completa</option>
+                                                </select>
+                                            </div>
                                         </div>
                                         <div class="col-lg-3 col-xl-3 col-md-3 col-sm-12">
-                                            <input type="button" value='Comprobar' onclick='prueba_notificacion()' hidden>
                                             <input type="hidden" value='{{ $associateid }}' id="associateid">
                                         </div>
                                     </div>
                                     <div class="table-responsive">
                                         <table id="html5-extension" class="table table-striped table-bordered table-hover" >
                                             <thead>
-                                                <!--<tr class="text-center" style="background-color: #f58b22">
-                                                    <th class="filterhead"><p style="width: 150px"></p></th>
-                                                    <th class="filterhead"></th>
-                                                    <th class="filterhead"><p style="width: 150px">dfgdf</p></th>
-                                                    <th class="filterhead"><p style="width: 50px"></p></th>
-                                                    <th class="filterhead"><p style="width: 150px"></p></th>
-                                                    <th class="filterhead"></th>
-                                                    <th class="filterhead"></th>
-                                                    <th class="filterhead"></th>
-                                                    <th class="filterhead"></th>
-                                                    <th><p style="width: 90px"></p></th>
-                                                </tr>-->
                                                 <tr class="text-center" style="background-color: #fbb314">
                                                     <th><p style="width: 150px">Nombre de asesor</p></th>
                                                     <th>Numero de asesor</th>
                                                     <th><p style="width: 150px">Tipo asesor</p></th>
                                                     <th><p style="width: 50px">Rango</p></th>
                                                     <th><p style="width: 150px">Patrocinador</p></th>
-                                                    <th>Puntos Noviembre</th>
                                                     <th>Puntos Diciembre</th>
                                                     <th>Puntos Enero</th>
                                                     <th>Teléfono contacto</th>
-                                                    <th><p style="width: 90px"></p></th>
+                                                    <th class="text-center actionsh"><p style="width: 90px">Forma de emisión</p></th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="genelaogy">
-                                                
-                                            </tbody>
                                         </table>
                                     </div>
                                     <div class="col-lg-12 text-center">
@@ -362,7 +345,9 @@
     <script src="{{asset('fpro/plugins/table/datatable/button-ext/jszip.min.js')}}"></script>    
     <script src="{{asset('fpro/plugins/table/datatable/button-ext/buttons.html5.min.js')}}"></script>
     <script src="{{asset('fpro/plugins/table/datatable/button-ext/buttons.print.min.js')}}"></script>
-    <script src="{{asset('fpro/mainjs/depurados.js')}}"></script>
+    <script src="{{asset('fpro/mainjs/depurados/depurados.js')}}"></script>
     <script src="{{asset('fpro/plugins/sweetalerts/sweetalert2.min.js')}}"></script>
     <script src="https://cdn.datatables.net/scroller/2.0.1/js/dataTables.scroller.min.js"></script>
+    <script src="{{asset('fpro/plugins/blockui/jquery.blockUI.min.js')}}"></script>
+    <script src="{{asset('fpro/plugins/blockui/custom-blockui.js')}}"></script>
 </html>
