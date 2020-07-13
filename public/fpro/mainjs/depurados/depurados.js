@@ -5,10 +5,6 @@ var countDownDate = new Date("Jan 15, 2020 23:59:59").getTime();
 var promo = false; // AUN HAY PROMOCIO? (true = si hay promo) (false = no hay promo)
 var showButtonCol = true; // VALOR PARA DEFINIR SI SE MUESTRA LA COLUMNA DE LOS BOTONES DE EMISIÓN
 
-var dt = new Date();
-var tz = dt.getTimezoneOffset();
-console.log("getTimezoneOffset() : " + tz ); 
-
 $(document).ready(function() {
     App.init(); // INICIALIZA LA APP
     getGenealogy(type); // INICIALIZAMOS DATATBLE
@@ -53,7 +49,7 @@ function getGenealogy(type){
         destroy: true,
         ajax: "/getgenealogy?associateid=" + associateid + "&tipo=" + type,
         columns: [
-            { 
+            {
                 data: 'AssociateName',
                 "render": function (data, type, row) {
                     var nombre = String(row.AssociateName);
@@ -62,7 +58,7 @@ function getGenealogy(type){
                 },
             },
             { data: 'associateid' },
-            { 
+            {
                 data: 'AssociateType',
                 "render": function (data, type, row) {
                     if (row.AssociateType > 100) {
@@ -73,7 +69,7 @@ function getGenealogy(type){
                     }
                 }
             },
-            { 
+            {
                 data: 'Rango',
                 className: "text-center",
                 "render": function (data, type, row) {
@@ -104,7 +100,7 @@ function getGenealogy(type){
                 }
             },
             { data: 'SponsorName' },
-            { 
+            {
                 data: 'VP_Dic',
                 className: "text-center",
                 "render": function (data, type, row) {
@@ -121,7 +117,7 @@ function getGenealogy(type){
                     }
                 }
             },
-            { 
+            {
                 data: 'VP_Enero',
                 className: "text-center",
                 "render": function (data, type, row) {
@@ -304,6 +300,7 @@ function getGenealogy(type){
         },
         "bLengthChange": false,
         "iDisplayLength": 10,
+        "responsive": true,
     });
 }
 

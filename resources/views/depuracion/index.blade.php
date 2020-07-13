@@ -284,6 +284,7 @@
                                         <table id="html5-extension" class="table table-striped table-bordered table-hover" >
                                             <thead>
                                                 <tr class="text-center" style="background-color: #fbb314">
+                                                    <th><input type="checkbox" name="select_all" value="1" id="example-select-all"></th>
                                                     <th><p style="width: 150px">Nombre de asesor</p></th>
                                                     <th>Numero de asesor</th>
                                                     <th><p style="width: 150px">Tipo asesor</p></th>
